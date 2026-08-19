@@ -1596,6 +1596,15 @@ footer.site .links a {
         align-items: start;
     }
 
+    .student-statement .split {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    .student-statement .body p {
+        max-width: 62em;
+    }
+
     .facts>div {
         grid-template-columns: 140px 1fr;
         padding: 18px 0;
@@ -1879,7 +1888,7 @@ footer.site .links a {
     color: var(--ink);
 }
 
-.status-badge {
+.optional-badge {
     display: inline-flex;
     padding: 3px 9px;
     background: var(--tint);

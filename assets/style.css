@@ -1383,6 +1383,22 @@ footer.site .links a {
     font-size: 13px;
 }
 
+footer.site .for-presenters {
+    margin: 0 0 12px;
+    font-size: 12px;
+}
+
+footer.site .for-presenters a {
+    color: rgba(255, 255, 255, .74);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+footer.site .for-presenters a:hover,
+footer.site .for-presenters a:focus-visible {
+    color: #fff;
+}
+
 .back-to-top {
     position: fixed;
     right: 14px;

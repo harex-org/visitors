@@ -144,12 +144,15 @@ a {
     text-decoration: none;
     color: var(--ink);
     flex: 1 1 auto;
+    overflow: hidden;
+    transition: height .28s ease, opacity .2s ease, visibility 0s;
 }
 
 .brand-logo {
     display: block;
     width: 112px;
     height: auto;
+    transition: width .28s ease;
 }
 
 .brand .jp {
@@ -191,6 +194,7 @@ a {
     text-decoration: none;
     white-space: nowrap;
     border-bottom: 2px solid transparent;
+    transition: min-height .28s ease, padding .28s ease, font-size .28s ease;
 }
 
 .site-nav a.on {
@@ -200,6 +204,23 @@ a {
 
 .site-nav a:first-child {
     margin-left: auto;
+}
+
+/* スクロール後は、スマホではロゴ行を閉じてページ内ナビだけを残す */
+body.is-header-compact .brand {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition-delay: 0s, 0s, .28s;
+}
+
+body.is-header-compact .site-nav a {
+    min-height: 42px;
+}
+
+body.is-header-compact section {
+    scroll-margin-top: 58px;
 }
 
 /* ==========================================================================
@@ -760,7 +781,7 @@ h3 {
 
 .tt table {
     width: 100%;
-    min-width: 680px;
+    min-width: 560px;
     border-collapse: collapse;
     table-layout: fixed;
     font-variant-numeric: tabular-nums;
@@ -779,6 +800,10 @@ h3 {
     color: #fff;
     font-size: 13.5px;
     letter-spacing: .04em;
+}
+
+.tt thead th small {
+    color: rgba(255, 255, 255, .72);
 }
 
 .tt thead th:first-child {
@@ -1510,6 +1535,7 @@ footer.site .for-presenters a:focus-visible {
         grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
         gap: 8px;
         width: 300px;
+        transition: width .28s ease;
     }
 
     .header-cta a {
@@ -1561,6 +1587,43 @@ footer.site .for-presenters a:focus-visible {
         min-height: 46px;
         padding: 0 14px;
         font-size: 14px;
+    }
+
+    /* スクロール後もロゴ・主ボタン・全ナビを残し、補助要素だけを省く */
+    body.is-header-compact .brand {
+        height: 48px;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition-delay: 0s;
+    }
+
+    body.is-header-compact .brand-logo {
+        width: 92px;
+    }
+
+    body.is-header-compact .brand .jp {
+        display: none;
+    }
+
+    body.is-header-compact .header-cta {
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        width: 300px;
+    }
+
+    body.is-header-compact .header-cta a {
+        min-height: 34px;
+    }
+
+    body.is-header-compact .site-nav a {
+        min-height: 40px;
+        padding-right: 13px;
+        padding-left: 13px;
+        font-size: 13.5px;
+    }
+
+    body.is-header-compact section {
+        scroll-margin-top: 96px;
     }
 
     .mv {
@@ -1660,6 +1723,13 @@ footer.site .for-presenters a:focus-visible {
 @media (prefers-reduced-motion:reduce) {
     html {
         scroll-behavior: auto;
+    }
+
+    .brand,
+    .brand-logo,
+    .header-cta,
+    .site-nav a {
+        transition: none;
     }
 
     .topic-jump .arw {

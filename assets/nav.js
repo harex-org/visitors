@@ -1,3 +1,33 @@
+// スクロール後にヘッダーを縮小し、ページ上端へ戻ると元の大きさへ戻す。
+(function () {
+    var header = document.querySelector('.site-header');
+    if (!header) return;
+
+    var compact = false;
+    var ticking = false;
+
+    function updateHeader() {
+        var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        // 開く位置と閉じる位置をずらし、ページ上端付近でのちらつきを防ぐ。
+        var next = compact ? scrollY > 24 : scrollY > 112;
+
+        if (next !== compact) {
+            compact = next;
+            document.body.classList.toggle('is-header-compact', compact);
+        }
+        ticking = false;
+    }
+
+    function requestUpdate() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateHeader);
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    updateHeader();
+})();
+
 // 上部ナビの現在地ハイライト。
 // スクロール位置に応じて .on を付け替え、はみ出しているときは横スクロールで見える位置へ寄せる。
 (function () {

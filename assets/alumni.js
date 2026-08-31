@@ -1,19 +1,19 @@
 (function () {
     'use strict';
 
-    var search = document.getElementById('presentation-search');
-    var clearSearch = document.getElementById('search-clear');
-    var resetButton = document.getElementById('reset-filters');
-    var noResultsReset = document.getElementById('no-results-reset');
-    var list = document.getElementById('presentation-list');
-    var cards = Array.prototype.slice.call(document.querySelectorAll('.presentation-card'));
-    var visibleCount = document.getElementById('visible-count');
+    var search = document.getElementById('alumni-search');
+    var clearSearch = document.getElementById('alumni-search-clear');
+    var resetButton = document.getElementById('alumni-reset-filters');
+    var noResultsReset = document.getElementById('alumni-no-results-reset');
+    var list = document.getElementById('alumni-list');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.alumni-card'));
+    var visibleCount = document.getElementById('alumni-visible-count');
     var resultCount = document.getElementById('result-count');
-    var description = document.getElementById('filter-description');
-    var noResults = document.getElementById('no-results');
-    var selected = { type: 'all', field: 'all' };
+    var description = document.getElementById('alumni-filter-description');
+    var noResults = document.getElementById('alumni-no-results');
+    var selectedRole = 'all';
 
-    if (!search || !cards.length) return;
+    if (!search || !list || !cards.length) return;
 
     var synonymGroups = [
         ['ai', '人工知能', '機械学習', '深層学習', 'ディープラーニング'],
@@ -32,6 +32,8 @@
         ['大阪大学', '阪大', 'はんだい', 'osakau'],
         ['神戸大学', '神大', 'しんだい', 'kobeu'],
         ['兵庫県立大学', '兵庫県大', '県立大', 'けんりつだい'],
+        ['岡山大学', '岡大', 'おかだい'],
+        ['大阪医科薬科大学', '大阪医薬大', '大医薬'],
         ['理系', '科学', 'サイエンス'],
         ['文系', '人文科学', '社会科学'],
         ['医療', '医学', 'ヘルスケア'],
@@ -50,9 +52,7 @@
             .replace(/[\s　・･\-‐‑–—―~〜～_＿:：/／,，、。!！?？「」『』（）()]+/g, '');
     }
 
-    var normalizedSynonymGroups = synonymGroups.map(function (group) {
-        return group.map(normalize);
-    });
+    var normalizedSynonymGroups = synonymGroups.map(function (group) { return group.map(normalize); });
 
     function relatedTerms(token) {
         var terms = [token];
@@ -62,16 +62,13 @@
         return terms.filter(function (term, index) { return terms.indexOf(term) === index; });
     }
 
-    // 上限を超えた時点で計算を打ち切る、検索用の編集距離。
     function editDistanceWithin(left, right, limit) {
         if (Math.abs(left.length - right.length) > limit) return false;
-
         var previous = [];
         var current = [];
         var i;
         var j;
         for (j = 0; j <= right.length; j += 1) previous[j] = j;
-
         for (i = 1; i <= left.length; i += 1) {
             current = [i];
             var rowMinimum = current[0];
@@ -91,13 +88,11 @@
 
     function fuzzyContains(text, token) {
         if (token.length < 3) return false;
-
         var limit = token.length >= 7 ? 2 : 1;
         var minimumLength = Math.max(1, token.length - limit);
         var maximumLength = Math.min(text.length, token.length + limit);
         var length;
         var start;
-
         for (length = minimumLength; length <= maximumLength; length += 1) {
             for (start = 0; start + length <= text.length; start += 1) {
                 if (editDistanceWithin(token, text.slice(start, start + length), limit)) return true;
@@ -114,60 +109,47 @@
     }
 
     function containsExactTerm(searchIndex, term) {
-        // 「京大」が「東京大学」の内部にも現れるような、短い語の誤判定を防ぐ。
         if (term.length <= 2) return searchIndex.words.indexOf(term) !== -1;
         return searchIndex.text.indexOf(term) !== -1;
     }
 
-    function matchesExactly(searchIndex, token) {
-        return relatedTerms(token).some(function (term) {
-            return containsExactTerm(searchIndex, term);
-        });
-    }
-
-    function matchesSearch(searchIndex, token, allowFuzzy) {
-        if (matchesExactly(searchIndex, token)) return true;
-        if (!allowFuzzy) return false;
-        return relatedTerms(token).some(function (term) {
-            return fuzzyContains(searchIndex.text, term);
-        });
-    }
-
-    function matchScore(searchIndex, token, allowFuzzy) {
+    function exactScore(searchIndex, token) {
         if (containsExactTerm(searchIndex, token)) return 140;
-
         var terms = relatedTerms(token);
-        var termIndex;
-        for (termIndex = 1; termIndex < terms.length; termIndex += 1) {
-            if (containsExactTerm(searchIndex, terms[termIndex])) return 100;
+        var index;
+        for (index = 1; index < terms.length; index += 1) {
+            if (containsExactTerm(searchIndex, terms[index])) return 100;
         }
+        return 0;
+    }
 
-        if (!allowFuzzy) return 0;
+    function tokenScore(searchIndex, token, allowFuzzy) {
+        var score = exactScore(searchIndex, token);
+        if (score || !allowFuzzy) return score;
         if (fuzzyContains(searchIndex.text, token)) return 60;
-        return terms.slice(1).some(function (term) {
+        return relatedTerms(token).slice(1).some(function (term) {
             return fuzzyContains(searchIndex.text, term);
         }) ? 45 : 0;
     }
 
+    cards.forEach(function (card) {
+        card._searchIndex = buildSearchIndex(card.dataset.search + ' 白陵 白陵56期 56期 56期生 五十六期');
+    });
+
     function update() {
         var queryTokens = search.value.split(/[\s　,，、]+/).map(normalize).filter(Boolean);
-        var searchableIndexes = cards.map(function (card) { return buildSearchIndex(card.dataset.search); });
         var exactMatchesExist = queryTokens.map(function (token) {
-            return searchableIndexes.some(function (searchIndex) {
-                return matchesExactly(searchIndex, token);
-            });
+            return cards.some(function (card) { return exactScore(card._searchIndex, token) > 0; });
         });
-        var results = cards.map(function (card, cardIndex) {
-            var matchesType = selected.type === 'all' || card.dataset.type === selected.type;
-            var matchesField = selected.field === 'all' || card.dataset.field === selected.field;
-            var searchIndex = searchableIndexes[cardIndex];
+        var results = cards.map(function (card) {
+            var roleMatches = selectedRole === 'all' || card.dataset.role.split(/\s+/).indexOf(selectedRole) !== -1;
             var score = 0;
-            var matchesQuery = queryTokens.every(function (token, tokenIndex) {
-                var currentScore = matchScore(searchIndex, token, !exactMatchesExist[tokenIndex]);
+            var queryMatches = queryTokens.every(function (token, tokenIndex) {
+                var currentScore = tokenScore(card._searchIndex, token, !exactMatchesExist[tokenIndex]);
                 score += currentScore;
                 return currentScore > 0;
             });
-            return { card: card, visible: matchesType && matchesField && matchesQuery, score: score };
+            return { card: card, visible: roleMatches && queryMatches, score: score };
         });
 
         results.sort(function (left, right) {
@@ -179,11 +161,9 @@
         });
 
         var shown = 0;
-        results.forEach(function (result, resultIndex) {
-            var number = result.card.querySelector('.card-number');
+        results.forEach(function (result) {
             result.card.hidden = !result.visible;
             if (result.visible) shown += 1;
-            if (number) number.textContent = String(resultIndex + 1).padStart(2, '0');
             list.appendChild(result.card);
         });
 
@@ -193,44 +173,33 @@
         clearSearch.classList.toggle('is-visible', search.value.length > 0);
 
         var labels = [];
-        if (selected.type !== 'all') labels.push(selected.type);
-        if (selected.field !== 'all') labels.push(selected.field);
+        if (selectedRole !== 'all') labels.push(selectedRole);
         if (search.value.trim()) labels.push('「' + search.value.trim() + '」');
-        description.textContent = labels.length ? labels.join('・') + 'で絞り込み中' : '発表者の五十音順で表示しています';
-    }
-
-    function selectFilter(group, value, button) {
-        selected[group] = value;
-        var parent = button.closest('.filter-group');
-        Array.prototype.forEach.call(parent.querySelectorAll('.filter-chip'), function (chip) {
-            var active = chip === button;
-            chip.classList.toggle('is-active', active);
-            chip.setAttribute('aria-pressed', active ? 'true' : 'false');
-        });
-        update();
+        description.textContent = labels.length ? labels.join('・') + 'で絞り込み中' : '五十音順で表示しています';
     }
 
     function reset() {
         search.value = '';
-        selected.type = 'all';
-        selected.field = 'all';
-        Array.prototype.forEach.call(document.querySelectorAll('.filter-group'), function (group) {
-            Array.prototype.forEach.call(group.querySelectorAll('.filter-chip'), function (chip) {
-                var active = chip.dataset.filter === 'all';
-                chip.classList.toggle('is-active', active);
-                chip.setAttribute('aria-pressed', active ? 'true' : 'false');
-            });
+        selectedRole = 'all';
+        Array.prototype.forEach.call(document.querySelectorAll('[data-filter-group="role"] .filter-chip'), function (chip) {
+            var active = chip.dataset.filter === 'all';
+            chip.classList.toggle('is-active', active);
+            chip.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
         update();
         search.focus();
     }
 
-    Array.prototype.forEach.call(document.querySelectorAll('.filter-group'), function (group) {
-        group.addEventListener('click', function (event) {
-            var button = event.target.closest('.filter-chip');
-            if (!button) return;
-            selectFilter(group.dataset.filterGroup, button.dataset.filter, button);
+    document.querySelector('[data-filter-group="role"]').addEventListener('click', function (event) {
+        var button = event.target.closest('.filter-chip');
+        if (!button) return;
+        selectedRole = button.dataset.filter;
+        Array.prototype.forEach.call(this.querySelectorAll('.filter-chip'), function (chip) {
+            var active = chip === button;
+            chip.classList.toggle('is-active', active);
+            chip.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
+        update();
     });
 
     search.addEventListener('input', update);

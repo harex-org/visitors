@@ -115,7 +115,7 @@ a {
     background-size: 100% 100%;
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    ヘッダー
    ========================================================================== */
 .site-header {
@@ -1667,6 +1667,11 @@ footer.site .for-presenters a:focus-visible {
         border-bottom: 1px solid var(--line);
     }
 
+    .member-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 40px;
+    }
+
     /* 本文の左に見出し、右に図版 */
     .split {
         display: grid;
@@ -1921,6 +1926,170 @@ footer.site .for-presenters a:focus-visible {
 
 .presentation-link {
     margin-top: 20px;
+}
+
+/* ==========================================================================
+   運営メンバー
+   ========================================================================== */
+.members-section {
+    background: #fff;
+}
+
+.members-intro {
+    margin-bottom: 0;
+}
+
+.member-grid {
+    display: grid;
+    gap: 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--line-strong);
+}
+
+.member-card {
+    min-width: 0;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.member-card.is-absent {
+    color: var(--sub);
+}
+
+.member-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.member-head h3 {
+    margin: 0;
+    font-size: 19px;
+}
+
+.member-status {
+    flex: 0 0 auto;
+    padding: 2px 8px;
+    background: rgba(40, 62, 148, .08);
+    color: var(--navy);
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.member-status.absent {
+    background: var(--tint);
+    color: var(--sub);
+}
+
+.member-affiliation {
+    margin: 0;
+    color: var(--sub);
+    font-size: 12.5px;
+    line-height: 1.75;
+}
+
+.member-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.member-fields li {
+    padding: 2px 8px;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.members-note {
+    margin-top: 20px;
+    color: var(--sub);
+    font-size: 12px;
+}
+
+.alumni-list {
+    margin-top: 0;
+}
+
+.alumni-card .member-head {
+    align-items: flex-start;
+}
+
+.alumni-card .member-head h2 {
+    margin: 0;
+    font-size: clamp(20px, 5.6vw, 25px);
+    line-height: 1.45;
+}
+
+.role-tags {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 5px;
+    max-width: 58%;
+}
+
+.role-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 8px;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.role-tag.presenter {
+    background: #e57200;
+}
+
+.role-tag.organizer {
+    background: var(--navy);
+}
+
+.member-presentation {
+    margin: 15px 0 0;
+    padding-top: 13px;
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.member-presentation b {
+    display: inline-block;
+    margin-right: 8px;
+    color: var(--navy);
+    font-size: 10.5px;
+}
+
+.alumni-page .listing-hero .notice small {
+    color: var(--sub);
+}
+
+.cohort-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 22px;
+    margin-left: 5px;
+    padding: 1px 7px;
+    border: 1px solid var(--navy);
+    color: var(--navy);
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    vertical-align: .22em;
+    white-space: nowrap;
 }
 
 .step-list {
@@ -2359,6 +2528,13 @@ footer.site .for-presenters a:focus-visible {
     margin-top: 18px;
 }
 
+.listing-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
 .listing-back-to-top {
     bottom: 18px;
 }
@@ -2366,6 +2542,11 @@ footer.site .for-presenters a:focus-visible {
 @media (min-width: 700px) {
     .teaser-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .alumni-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 42px;
     }
 
     .survey-panel {
@@ -2419,6 +2600,10 @@ footer.site .for-presenters a:focus-visible {
         gap: 24px;
         align-items: end;
         padding: 26px;
+    }
+
+    .alumni-filter-panel {
+        grid-template-columns: minmax(320px, 1.4fr) minmax(320px, 1fr);
     }
 
     .filter-group {

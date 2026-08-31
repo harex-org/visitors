@@ -2264,6 +2264,31 @@ footer.site .for-presenters a:focus-visible {
     line-height: 1.55;
 }
 
+.program-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    margin: -4px 0 12px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.program-info b {
+    color: var(--navy);
+    font: 700 15px/1.4 "Jost", var(--font);
+    font-variant-numeric: tabular-nums;
+}
+
+.program-info span {
+    color: var(--sub);
+}
+
+.program-info span::before {
+    content: "@ ";
+    color: #aaaab0;
+}
+
 .card-subtitle {
     margin: -9px 0 18px;
     color: var(--sub);

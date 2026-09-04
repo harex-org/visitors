@@ -2275,6 +2275,14 @@ footer.site .for-presenters a:focus-visible {
     white-space: nowrap;
 }
 
+.member-roman {
+    display: block;
+    margin-top: 4px;
+    color: var(--sub);
+    font: 600 10.5px/1.4 "Jost", sans-serif;
+    letter-spacing: .12em;
+}
+
 .step-list {
     margin: 30px 0 0;
     padding: 0;

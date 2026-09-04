@@ -133,7 +133,7 @@
     }
 
     cards.forEach(function (card) {
-        card._searchIndex = buildSearchIndex(card.dataset.search + ' 白陵 白陵56期 56期 56期生 五十六期');
+        card._searchIndex = buildSearchIndex(card.dataset.search + ' ' + (card.textContent || '') + ' 白陵 白陵56期 56期 56期生 五十六期');
     });
 
     function update() {

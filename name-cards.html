@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HAREx2026 ネームカード</title>
+    <style>
+        :root {
+            --ink: #172033;
+            --muted: #687086;
+            --line: #aeb5c2;
+            --navy: #283e94;
+            --cyan: #00bfd0;
+            --blue: #086bff;
+            --field-engineering: #086bff;
+            --field-life: #008b68;
+            --field-humanities: #7850b8;
+            --field-medical: #d34870;
+            --field-disaster: #d96a16;
+            --paper: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: #e8eaf0;
+            font-family: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .screen-tools {
+            position: sticky;
+            z-index: 10;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 14px 24px;
+            color: #fff;
+            background: #172033;
+            box-shadow: 0 2px 12px rgb(0 0 0 / 18%);
+        }
+
+        .screen-tools p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .screen-tools button {
+            flex: 0 0 auto;
+            padding: 9px 20px;
+            border: 1px solid #fff;
+            border-radius: 999px;
+            color: #172033;
+            background: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .pages {
+            display: grid;
+            gap: 18px;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .sheet {
+            display: grid;
+            grid-template-columns: repeat(3, 90mm);
+            grid-template-rows: repeat(4, 50mm);
+            width: 297mm;
+            height: 210mm;
+            padding: 5mm 13.5mm;
+            overflow: hidden;
+            background: var(--paper);
+            box-shadow: 0 8px 30px rgb(0 0 0 / 16%);
+            break-after: page;
+            page-break-after: always;
+        }
+
+        .sheet:last-child {
+            break-after: auto;
+            page-break-after: auto;
+        }
+
+        .name-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 90mm;
+            height: 50mm;
+            padding: 3.1mm 4mm 2.8mm;
+            overflow: hidden;
+            border: .2mm solid #c7cbd4;
+            background: #fff;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 8.5mm;
+            gap: 2mm;
+        }
+
+        .event-name {
+            display: block;
+            width: 20mm;
+            height: 8.5mm;
+            background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjk3IiBoZWlnaHQ9IjYyIiB2aWV3Qm94PSIwIDAgMjk3IDYyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTc3LjY3NSA1MS4xODIyVjBIMjE4LjkxNFY1LjU1NjkzSDE4My4zNzhWNDUuNjI1M0gyMTguNzY3VjUxLjE4MjJIMTc3LjY3NVpNMTgwLjc0NiAyNy42Mzg0VjIyLjA4MTVIMjE0LjgxOVYyNy42Mzg0SDE4MC43NDZaIiBmaWxsPSIjMjgzRTk0Ii8+CjxwYXRoIGQ9Ik0xMjAuMjM1IDUxLjE4MjJWMEgxNDguMzg2QzE1MS40NTYgMCAxNTQuMjExIDAuNjgyNDI5IDE1Ni42NDggMi4wNDcyOUMxNTkuMTM0IDMuNDEyMTUgMTYxLjEwOCA1LjI2NDQ1IDE2Mi41NyA3LjYwNDIxQzE2NC4wMzMgOS44OTUyMyAxNjQuNzY0IDEyLjQ1NDMgMTY0Ljc2NCAxNS4yODE1QzE2NC43NjQgMTguNDUgMTYzLjk4NCAyMS4yNTI4IDE2Mi40MjQgMjMuNjlDMTYwLjg2NCAyNi4wNzg1IDE1OC43NDQgMjcuOTU1MiAxNTYuMDYzIDI5LjMyMDFDMTUzLjQzMSAzMC42ODQ5IDE1MC40NTcgMzEuMzY3NCAxNDcuMTQzIDMxLjM2NzRIMTI1LjkzOVY1MS4xODIySDEyMC4yMzVaTTE2MC42NjkgNTEuMTgyMkwxNDMuNDE0IDI4LjY2MkwxNDkuMTkgMjYuOTA3MkwxNjcuNzYyIDUxLjE4MjJIMTYwLjY2OVpNMTI1LjkzOSAyNS44MTA0SDE0Ni40MTFDMTQ4Ljc1MSAyNS44MTA0IDE1MC44NDcgMjUuMzQ3NCAxNTIuNjk5IDI0LjQyMTJDMTU0LjU1MiAyMy40OTUxIDE1Ni4wMTQgMjIuMjUyMSAxNTcuMDg3IDIwLjY5MjJDMTU4LjE1OSAxOS4xMzI0IDE1OC42OTUgMTcuMzc3NiAxNTguNjk1IDE1LjQyNzhDMTU4LjY5NSAxMy41NzU1IDE1OC4xNTkgMTEuOTE4MSAxNTcuMDg3IDEwLjQ1NThDMTU2LjAxNCA4Ljk0NDcgMTU0LjU3NiA3Ljc1MDQ1IDE1Mi43NzMgNi44NzMwNEMxNTAuOTY5IDUuOTk1NjMgMTQ4Ljk3MSA1LjU1NjkzIDE0Ni43NzcgNS41NTY5M0gxMjUuOTM5VjI1LjgxMDRaIiBmaWxsPSIjMjgzRTk0Ii8+CjxwYXRoIGQ9Ik01Ni43ODA4IDUxLjE4MjJMODEuNzEzOCAwSDg4Ljg3OTNMMTEzLjU5MyA1MS4xODIySDEwNy4yMzJMODkuMDI1NSAxMy41OTk4Qzg4LjM5MTkgMTIuMTM3NSA4Ny44NTU3IDEwLjk2NzYgODcuNDE3IDEwLjA5MDJDODcuMDI3IDkuMjEyNzkgODYuNjYxNCA4LjQ1NzI1IDg2LjMyMDIgNy44MjM1NkM4NS45NzkgNy4xODk4OCA4NS42Mzc4IDYuNDgzMDggODUuMjk2NiA1LjcwMzE2Qzg1LjAwNDEgNC45MjMyNCA4NC42NjI5IDMuOTIzOTcgODQuMjcyOSAyLjcwNTM0TDg1Ljk1NDYgMi42MzIyM0M4NS40MTg0IDQuMDQ1ODMgODQuOTU1MyA1LjE5MTM0IDg0LjU2NTQgNi4wNjg3NUM4NC4yMjQyIDYuODk3NDEgODMuODgzIDcuNjc3MzMgODMuNTQxNyA4LjQwODVDODMuMjAwNSA5LjA5MDkzIDgyLjgxMDYgOS44NDY0OCA4Mi4zNzE5IDEwLjY3NTFDODEuOTgxOSAxMS41MDM4IDgxLjQ3MDEgMTIuNjAwNiA4MC44MzY0IDEzLjk2NTRMNjIuNzc2NCA1MS4xODIySDU2Ljc4MDhaTTY3LjA5MDMgMzcuODAxN0w2OS40MzAxIDMyLjI0NDhIMTAwLjcyNEwxMDEuNzQ4IDM3LjgwMTdINjcuMDkwM1oiIGZpbGw9IiMyODNFOTQiLz4KPHBhdGggZD0iTTQ0LjQ1NTQgNTEuMTgyMlYwSDUwLjE1ODZWNTEuMTgyMkg0NC40NTU0Wk0wIDUxLjE4MjJWMEg1LjcwMzE2VjUxLjE4MjJIMFpNMi43Nzg0NiAyOC43MzUxTDIuODUxNTggMjMuMTc4Mkg0Ni44NjgzVjI4LjczNTFIMi43Nzg0NloiIGZpbGw9IiMyODNFOTQiLz4KPHBhdGggZD0iTTIzMC44MTMgNjEuMzg4MUMyMjguNDU3IDYxLjM4ODEgMjI2LjUwOCA2MS4wNjMxIDIyNC45NjQgNjAuNDEzMkMyMjQuNTk4IDYwLjI1MDcgMjI0LjI5NCA2MC4wNDc2IDIyNC4wNSA1OS44MDM5QzIyMy44MDYgNTkuNTYwMSAyMjMuNjY0IDU5LjI3NTggMjIzLjYyNCA1OC45NTA4QzIyMy42MjQgNTguNjI1OSAyMjMuNzA1IDU4LjI4MDYgMjIzLjg2NyA1Ny45MTVDMjI0LjA3IDU3LjM0NjMgMjI0LjM5NSA1Ny4wNDE3IDIyNC44NDIgNTcuMDAxQzIyNS4yODkgNTYuOTE5OCAyMjUuODE3IDU3LjAwMSAyMjYuNDI2IDU3LjI0NDhDMjI3LjExNyA1Ny40ODg1IDIyNy44MjggNTcuNjkxNiAyMjguNTU5IDU3Ljg1NDFDMjI5LjI5IDU3Ljk3NTkgMjMwLjA0MiA1OC4wMzY5IDIzMC44MTMgNTguMDM2OUMyMzIuMTU0IDU4LjAzNjkgMjMzLjM5MyA1Ny4zODY5IDIzNC41MyA1Ni4wODcxQzIzNS42NjggNTQuNzg3MiAyMzYuNjAyIDUzLjAyMDIgMjM3LjMzMyA1MC43ODYxQzIzOC4xMDUgNDguNTUxOSAyMzguNTMxIDQ2LjA3NCAyMzguNjEzIDQzLjM1MjVDMjM4LjY1MyA0Mi4zMzY5IDIzOC40OTEgNDEuMzIxNCAyMzguMTI1IDQwLjMwNTlDMjM3LjggMzkuMjkwNCAyMzcuMTEgMzguNzgyNiAyMzYuMDUzIDM4Ljc4MjZDMjM1LjA3OSAzOC43ODI2IDIzNC4xNDQgMzkuMjQ5OCAyMzMuMjUxIDQwLjE4NEMyMzIuMzU3IDQxLjA3NzcgMjMxLjQ4NCA0Mi4zMTY2IDIzMC42MzEgNDMuOTAwOEMyMzAuNDY4IDQ0LjI2NjQgMjMwLjE2MyA0NC40ODk4IDIyOS43MTcgNDQuNTcxMUMyMjkuMjcgNDQuNjExNyAyMjguODAzIDQ0LjQ4OTggMjI4LjMxNSA0NC4yMDU1QzIyNy45MDkgNDQuMDAyNCAyMjcuNjI1IDQzLjcxOCAyMjcuNDYyIDQzLjM1MjVDMjI3LjMgNDIuOTQ2MiAyMjcuMyA0Mi41ODA3IDIyNy40NjIgNDIuMjU1N0MyMjkuNzM3IDM3LjcwNjIgMjMyLjcwMiAzNS40MzE0IDIzNi4zNTggMzUuNDMxNEMyMzcuMjUyIDM1LjQzMTQgMjM4LjA4NSAzNS42NTQ4IDIzOC44NTYgMzYuMTAxNkMyMzkuNjY5IDM2LjU0ODUgMjQwLjMxOSAzNy4zIDI0MC44MDYgMzguMzU2MUMyNDEuMjk0IDM5LjM3MTYgMjQxLjUzNyA0MC43OTMzIDI0MS41MzcgNDIuNjIxM0MyNDEuNDk3IDQ2LjE5NTkgMjQxLjAwOSA0OS40MDQ5IDI0MC4wNzUgNTIuMjQ4NEMyMzkuMTQxIDU1LjA1MTIgMjM3Ljg4MSA1Ny4yODU0IDIzNi4yOTcgNTguOTUwOEMyMzQuNzEzIDYwLjU3NTcgMjMyLjg4NSA2MS4zODgxIDIzMC44MTMgNjEuMzg4MVpNMjQzLjM2NSA2MS4zODgxQzI0Mi40NzIgNjEuMzg4MSAyNDEuNjE5IDYxLjE2NDcgMjQwLjgwNiA2MC43MTc4QzI0MC4wMzQgNjAuMjcxIDIzOS40MDUgNTkuNTE5NSAyMzguOTE3IDU4LjQ2MzRDMjM4LjQzIDU3LjQwNzIgMjM4LjE4NiA1NS45ODU1IDIzOC4xODYgNTQuMTk4MkMyMzguMTg2IDUwLjYyMzYgMjM4LjY1MyA0Ny40MzQ4IDIzOS41ODggNDQuNjMyQzI0MC41MjIgNDEuNzg4NSAyNDEuODAxIDM5LjU1NDQgMjQzLjQyNiAzNy45Mjk2QzI0NS4wOTIgMzYuMjY0MSAyNDYuOTQgMzUuNDMxNCAyNDguOTcxIDM1LjQzMTRDMjUwLjE0OSAzNS40MzE0IDI1MS4yMjUgMzUuNTEyNiAyNTIuMiAzNS42NzUxQzI1My4xNzUgMzUuODM3NiAyNTQuMDQ5IDM2LjA4MTMgMjU0LjgyIDM2LjQwNjNDMjU1LjIyNyAzNi41MjgyIDI1NS41MzEgMzYuNzMxMyAyNTUuNzM0IDM3LjAxNTZDMjU1LjkzNyAzNy4yNTkzIDI1Ni4wNTkgMzcuNTQzNyAyNTYuMSAzNy44Njg2QzI1Ni4xNCAzOC4xOTM2IDI1Ni4wOCAzOC41Mzg5IDI1NS45MTcgMzguOTA0NUMyNTUuNzE0IDM5LjQzMjUgMjU1LjM2OSAzOS43MzcyIDI1NC44ODEgMzkuODE4NEMyNTQuNDM0IDM5Ljg5OTcgMjUzLjkwNiAzOS44MTg0IDI1My4yOTcgMzkuNTc0N0MyNTIuNjQ3IDM5LjMzMSAyNTEuOTU3IDM5LjE0ODIgMjUxLjIyNSAzOS4wMjYzQzI1MC41MzUgMzguODYzOSAyNDkuNzgzIDM4Ljc4MjYgMjQ4Ljk3MSAzOC43ODI2QzI0Ny42NzEgMzguNzgyNiAyNDYuNDMyIDM5LjQzMjUgMjQ1LjI1NCA0MC43MzI0QzI0NC4wNzYgNDIuMDMyMyAyNDMuMTIyIDQzLjc5OTMgMjQyLjM5IDQ2LjAzMzRDMjQxLjY1OSA0OC4yMjY5IDI0MS4yNTMgNTAuNzA0OCAyNDEuMTcyIDUzLjQ2N0MyNDEuMTMxIDU0LjQ4MjUgMjQxLjI3MyA1NS40OTgxIDI0MS41OTggNTYuNTEzNkMyNDEuOTY0IDU3LjUyOTEgMjQyLjY1NCA1OC4wMzY5IDI0My42NyA1OC4wMzY5QzI0NC42NDUgNTguMDM2OSAyNDUuNzYyIDU3LjMwNTcgMjQ3LjAyMSA1NS44NDMzQzI0OC4zMjEgNTQuMzQwNCAyNDkuNjAxIDUyLjM3MDMgMjUwLjg2IDQ5LjkzM0MyNTEuMDYzIDQ5LjU2NzQgMjUxLjM2OCA0OS4zNjQzIDI1MS43NzQgNDkuMzIzN0MyNTIuMjIxIDQ5LjI4MzEgMjUyLjY4OCA0OS4zODQ2IDI1My4xNzUgNDkuNjI4NEMyNTMuNTgxIDQ5LjgzMTUgMjUzLjg2NiA1MC4xMzYxIDI1NC4wMjggNTAuNTQyM0MyNTQuMTkxIDUwLjkwNzkgMjU0LjE5MSA1MS4yNTMyIDI1NC4wMjggNTEuNTc4MkMyNTIuNTI1IDU0LjU4NDEgMjUwLjgxOSA1Ni45ODA3IDI0OC45MSA1OC43NjhDMjQ3LjAwMSA2MC41MTQ3IDI0NS4xNTMgNjEuMzg4MSAyNDMuMzY1IDYxLjM4ODFaIiBmaWxsPSIjMjgzRTk0Ii8+CjxwYXRoIGQ9Ik0yODkuODMzIDE3LjY2OTlIMjkyLjk2M0wyODguNzgyIDIzLjY1NjRDMjg5LjUzNiAyMy40OTY1IDI4OS45OTMgMjMuNDI3OSAyOTAuNjEgMjMuNDI3OUMyOTEuNTkyIDIzLjQyNzkgMjkyLjUyOSAyMy42NzkzIDI5My4zNTIgMjQuMTM2MkMyOTQuOTc0IDI1LjA1MDIgMjk2LjA0OCAyNi45MDEgMjk2LjA0OCAyOC43NzQ2QzI5Ni4wNDggMzEuODEzNiAyOTMuNDQzIDM0LjE4OTkgMjkwLjA4NCAzNC4xODk5QzI4Ni42MTEgMzQuMTg5OSAyODMuODY5IDMxLjgxMzYgMjgzLjg2OSAyOC43OTc1QzI4My44NjkgMjcuODYwNyAyODQuMDUyIDI2Ljg3ODEgMjg0LjQxOCAyNS45MTg1QzI4NC41MzIgMjUuNjIxNCAyODQuNTMyIDI1LjYyMTQgMjg1LjUzNyAyNC4xNTkxTDI4OS44MzMgMTcuNjY5OVpNMjg5Ljk0NyAyNS4zMjQ0QzI4OS4zMyAyNS4zMjQ0IDI4OC43MTMgMjUuNDg0MyAyODguMTY1IDI1LjgyNzFDMjg3LjExNCAyNi40NDQgMjg2LjQ5NyAyNy41MTc5IDI4Ni40OTcgMjguNjgzMkMyODYuNDk3IDMwLjU3OTcgMjg4LjAwNSAzMi4wNjQ5IDI4OS45MjQgMzIuMDY0OUMyOTAuNTY0IDMyLjA2NDkgMjkxLjIwNCAzMS45MDUgMjkxLjc3NSAzMS41NjIyQzI5Mi44NzIgMzAuOTQ1MyAyOTMuNTEyIDI5Ljg3MTQgMjkzLjUxMiAyOC42NjA0QzI5My41MTIgMjguMDY2MyAyOTMuMzUyIDI3LjUxNzkgMjkzLjA3NyAyNy4wMzgxQzI5Mi40MTUgMjUuOTQxMyAyOTEuMjk1IDI1LjMyNDQgMjg5Ljk0NyAyNS4zMjQ0WiIgZmlsbD0iIzAwQzJEMCIvPgo8cGF0aCBkPSJNMjcyLjM3NiAzMy42NjQ1TDI4MC4zOTYgMjQuNzMwNUMyODAuNDg3IDI0LjYzOTEgMjgwLjY5MyAyNC4zNDIgMjgwLjk0NCAyMy45NTM2QzI4MS4yNDEgMjMuNDUwOSAyODEuMzc5IDIyLjk3MTEgMjgxLjM3OSAyMi4yNjI4QzI4MS4zNzkgMjAuNTcxOSAyODAuMjM2IDE5LjQwNjYgMjc4LjU5MSAxOS40MDY2QzI3OC4wODggMTkuNDA2NiAyNzcuNjA4IDE5LjUyMDggMjc3LjE5NyAxOS43NDkzQzI3Ni4zMDYgMjAuMjUyIDI3NS44OTUgMjAuOTgzMiAyNzUuNzU4IDIyLjIzOTlIMjczLjA4NEMyNzMuMTA3IDE5LjM2MDkgMjc1LjUyOSAxNy4xNDQ1IDI3OC42NiAxNy4xNDQ1QzI4MS43OSAxNy4xNDQ1IDI4My45MzggMTkuMjIzOCAyODMuOTM4IDIyLjI2MjhDMjgzLjkzOCAyMi45NDgyIDI4My44MjMgMjMuNTg4IDI4My42MTggMjQuMTU5MkMyODMuMzg5IDI0Ljc5OSAyODMuMDAxIDI1LjQxNTkgMjgyLjQ3NSAyNi4wMUwyNzcuNTQgMzEuNDkzOEgyODMuOTYxVjMzLjY2NDVIMjcyLjM3NloiIGZpbGw9IiMwMEMyRDAiLz4KPHBhdGggZD0iTTI2Ny4wMjkgMTcuMTQ0NUMyNjcuNTc4IDE3LjE0NDUgMjY4LjEyNiAxNy4yMzU5IDI2OC42NTIgMTcuNDE4N0MyNzEuMzcxIDE4LjQwMTIgMjczLjEwNyAyMS42MDAxIDI3My4xMDcgMjUuNjQ0NEMyNzMuMTA3IDI3LjE1MjUgMjcyLjg1NiAyOC41OTIgMjcyLjM3NiAyOS45MTcyQzI3MS40MzkgMzIuNTY3NyAyNjkuMzE0IDM0LjE5IDI2Ni44OTIgMzQuMTlDMjY1LjY1OCAzNC4xOSAyNjQuNDcgMzMuNzc4NyAyNjMuNTc5IDMzLjA0NzZDMjYxLjY4MyAzMS41MTY3IDI2MC42NTQgMjguODg5IDI2MC42NTQgMjUuNTk4N0MyNjAuNjU0IDI0LjExMzUgMjYwLjkwNiAyMi42OTY5IDI2MS4zODUgMjEuMzk0NUMyNjIuMzkxIDE4LjY5ODMgMjY0LjQ0NyAxNy4xNDQ1IDI2Ny4wMjkgMTcuMTQ0NVpNMjY2LjgyNCAxOS4zNjA5QzI2Ni40ODEgMTkuMzYwOSAyNjYuMTM4IDE5LjQyOTUgMjY1LjgxOCAxOS41ODk0QzI2NC4zMzMgMjAuMzIwNiAyNjMuMzczIDIyLjcxOTcgMjYzLjM3MyAyNS42NjczQzI2My4zNzMgMjYuNzQxMiAyNjMuNTEgMjcuODE1MSAyNjMuODA3IDI4LjgyMDVDMjY0LjM1NiAzMC44MzEyIDI2NS40NzUgMzEuOTczNyAyNjYuODY5IDMxLjk3MzdDMjY3LjU3OCAzMS45NzM3IDI2OC4zMDkgMzEuNjUzOCAyNjguNzY2IDMxLjEyODJDMjY5Ljc5NCAyOS45NjI5IDI3MC4zODggMjcuOTUyMiAyNzAuMzg4IDI1LjcxM0MyNzAuMzg4IDIzLjM4MjQgMjY5Ljc5NCAyMS4zNzE2IDI2OC43NjYgMjAuMjA2M0MyNjguMzA5IDE5LjY4MDggMjY3LjU3OCAxOS4zNjA5IDI2Ni44MjQgMTkuMzYwOVoiIGZpbGw9IiMwMEMyRDAiLz4KPHBhdGggZD0iTTI0OS4yOTggMzMuNjY0NUwyNTcuMzE4IDI0LjczMDVDMjU3LjQxIDI0LjYzOTEgMjU3LjYxNSAyNC4zNDIgMjU3Ljg2NyAyMy45NTM2QzI1OC4xNjQgMjMuNDUwOSAyNTguMzAxIDIyLjk3MTEgMjU4LjMwMSAyMi4yNjI4QzI1OC4zMDEgMjAuNTcxOSAyNTcuMTU4IDE5LjQwNjYgMjU1LjUxMyAxOS40MDY2QzI1NS4wMTEgMTkuNDA2NiAyNTQuNTMxIDE5LjUyMDggMjU0LjEyIDE5Ljc0OTNDMjUzLjIyOCAyMC4yNTIgMjUyLjgxNyAyMC45ODMyIDI1Mi42OCAyMi4yMzk5SDI1MC4wMDdDMjUwLjAzIDE5LjM2MDkgMjUyLjQ1MiAxNy4xNDQ1IDI1NS41ODIgMTcuMTQ0NUMyNTguNzEyIDE3LjE0NDUgMjYwLjg2IDE5LjIyMzggMjYwLjg2IDIyLjI2MjhDMjYwLjg2IDIyLjk0ODIgMjYwLjc0NiAyMy41ODggMjYwLjU0IDI0LjE1OTJDMjYwLjMxMiAyNC43OTkgMjU5LjkyMyAyNS40MTU5IDI1OS4zOTggMjYuMDFMMjU0LjQ2MiAzMS40OTM4SDI2MC44ODNWMzMuNjY0NUgyNDkuMjk4WiIgZmlsbD0iIzAwQzJEMCIvPgo8L3N2Zz4K") left center / contain no-repeat;
+            font-size: 0;
+        }
+
+        .event-name::before {
+            content: none;
+        }
+
+        .event-name::after {
+            content: none;
+        }
+
+        .badges {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1mm;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 3.8mm;
+            padding: .25mm 1.1mm;
+            border: .2mm solid #aab0bd;
+            border-radius: 0;
+            color: #505766;
+            background: #fff;
+            font-size: 5pt;
+            font-weight: 700;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .badge.presenter {
+            color: #505766;
+            background: #fff;
+        }
+
+        .badge.organizer {
+            color: #505766;
+            background: #fff;
+        }
+
+        .person {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: end;
+            gap: .3mm 2mm;
+            margin-top: .7mm;
+            white-space: nowrap;
+        }
+
+        .person h2 {
+            grid-column: 1 / -1;
+            margin: 0;
+            color: #050505;
+            font-size: 38pt;
+            font-weight: 500;
+            letter-spacing: .045em;
+            line-height: 1.06;
+        }
+
+        .roman {
+            color: #171717;
+            font-family: Arial, sans-serif;
+            font-size: 7pt;
+            font-weight: 400;
+            letter-spacing: .025em;
+        }
+
+        .cohort {
+            color: var(--muted);
+            font-size: 5.4pt;
+            font-weight: 700;
+        }
+
+        .affiliation {
+            display: flex;
+            align-items: center;
+            order: 4;
+            min-height: 6.8mm;
+            margin: auto 0 0;
+            color: #060606;
+            font-size: 6.7pt;
+            font-weight: 700;
+            line-height: 1.28;
+        }
+
+        .fields {
+            order: 3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1mm;
+            min-height: 5.2mm;
+            margin: 1.8mm 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .fields li {
+            display: flex;
+            align-items: center;
+            min-height: 5.2mm;
+            padding: .45mm 1.7mm;
+            border: 0;
+            border-radius: 0;
+            color: #fff;
+            background: var(--field-engineering);
+            font-size: 6pt;
+            font-weight: 700;
+            line-height: 1.15;
+            white-space: nowrap;
+        }
+
+        .fields.field-life li {
+            background: var(--field-life);
+        }
+
+        .fields.field-humanities li {
+            background: var(--field-humanities);
+        }
+
+        .fields.field-medical li {
+            background: var(--field-medical);
+        }
+
+        .fields.field-disaster li {
+            background: var(--field-disaster);
+        }
+
+        .presentation {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.2mm;
+            align-items: start;
+            order: 5;
+            margin: .45mm 0 0;
+            padding: 0;
+            border: 0;
+            color: #3f4654;
+            font-size: 5.1pt;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .presentation b {
+            color: var(--blue);
+            font-size: 4.9pt;
+            white-space: nowrap;
+        }
+
+        .empty-slot {
+            width: 90mm;
+            height: 50mm;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+
+            html,
+            body {
+                background: #fff;
+            }
+
+            .screen-tools {
+                display: none;
+            }
+
+            .pages {
+                display: block;
+                padding: 0;
+            }
+
+            .sheet {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="screen-tools" aria-label="印刷設定">
+        <p><b>A4横・3列×4段・カード実寸90×50mm</b><br>印刷設定は「A4／横向き／倍率100%／余白なし／背景グラフィックあり」にしてください。</p>
+        <button type="button" onclick="window.print()">印刷する</button>
+    </aside>
+
+    <main class="pages">
+        <section class="sheet" aria-label="ネームカード 1ページ目">
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span></span></div>
+                <div class="person">
+                    <h2>淺野 真由子</h2><span class="roman">ASANO MAYUKO</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">京都大学大学院 農学研究科 森林科学専攻 生物材料設計学分野</p>
+                <ul class="fields field-life">
+                    <li>森林科学</li>
+                    <li>生物材料</li>
+                    <li>VR・空間評価</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>木のチカラ ―心地よさの探求―</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span></span></div>
+                <div class="person">
+                    <h2>井川 雄一朗</h2><span class="roman">IKAWA YUICHIRO</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">京都大学大学院 教育学研究科 臨床教育学コース</p>
+                <ul class="fields field-humanities">
+                    <li>教育学</li>
+                    <li>哲学</li>
+                    <li>共生社会</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>生き方としての哲学から共生社会を問い直す</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>内 勇樹</h2><span class="roman">UCHI YUKI</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">岡山大学大学院 日本史研究室</p>
+                <ul class="fields field-humanities"><li>日本史</li></ul>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span><span class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>大谷 駿介</h2><span class="roman">OTANI SHUNSUKE</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">大阪大学大学院 基礎工学研究科 システム創成専攻・M2</p>
+                <ul class="fields field-engineering">
+                    <li>社会システム数理</li>
+                    <li>ロボット・制御</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>分散システムの講演／倒立ロボットのワークショップ</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span></span></div>
+                <div class="person">
+                    <h2>木村 優汰</h2><span class="roman">KIMURA YUTA</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">京都大学 工学部 電気電子工学科</p>
+                <ul class="fields field-engineering">
+                    <li>電気電子工学</li>
+                    <li>人工知能</li>
+                    <li>画像認識</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>コンピュータビジョン（人工知能の視覚）</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span><span class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>栗岡 佑</h2><span class="roman">KURIOKA YU</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">大阪大学大学院 理学研究科 生物科学専攻 比較神経生物学研究室・修士1年</p>
+                <ul class="fields field-life">
+                    <li>生物科学</li>
+                    <li>比較神経生物学</li>
+                    <li>昆虫</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>亜社会性昆虫チビクワガタの概日リズム</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span></span></div>
+                <div class="person">
+                    <h2>後藤 優奈</h2><span class="roman">GOTO YUNA</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">東京大学大学院 農学生命科学研究科 応用生命化学専攻 分析化学研究室</p>
+                <ul class="fields field-life">
+                    <li>応用生命化学</li>
+                    <li>分析化学</li>
+                    <li>真珠</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>真珠の美しさの仕組みに迫る</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span></span></div>
+                <div class="person">
+                    <h2>笹倉 史都</h2><span class="roman">SASAKURA FUMITO</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">神戸大学大学院 システム情報学研究科 情報数理研究室</p>
+                <ul class="fields field-engineering">
+                    <li>情報数理</li>
+                    <li>暗号</li>
+                    <li>秘密計算</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>耐量子暗号と秘密計算</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>武本 あかね</h2><span class="roman">TAKEMOTO AKANE</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">京都大学大学院 薬学研究科 薬科学専攻 バイオ医薬品化学分野</p>
+                <ul class="fields field-medical">
+                    <li>薬学</li>
+                    <li>バイオ医薬品化学</li>
+                </ul>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span></span></div>
+                <div class="person">
+                    <h2>田尻 翔吾</h2><span class="roman">TAJIRI SHOGO</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">兵庫県立大学大学院 減災復興政策研究科</p>
+                <ul class="fields field-disaster">
+                    <li>防災・減災</li>
+                    <li>地理空間情報</li>
+                    <li>行政</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>災害対応における地理空間情報の活用方策</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>長岡 主馬</h2><span class="roman">NAGAOKA KAZUMA</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">京都大学大学院 工学研究科 化学工学専攻</p>
+                <ul class="fields field-engineering">
+                    <li>化学工学</li>
+                </ul>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span><span class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>橋元 瑛介</h2><span class="roman">HASHIMOTO EISUKE</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">大阪医科薬科大学 医学部</p>
+                <ul class="fields field-medical">
+                    <li>医療系</li>
+                    <li>母子保健</li>
+                    <li>心理・社会</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>1歳半の子を持つ母の認知する社会的支援と児への愛着の関連検討</span></p>
+            </article>
+        </section>
+
+        <section class="sheet" aria-label="ネームカード 2ページ目">
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge presenter">発表者</span><span class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>藤原 慈</h2><span class="roman">FUJIWARA SHIGERU</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">大阪大学大学院 情報科学研究科・M2</p>
+                <ul class="fields field-engineering">
+                    <li>情報科学</li>
+                    <li>画像処理</li>
+                    <li>レンズレスイメージング</li>
+                </ul>
+                <p class="presentation"><b>発表</b><span>深層レンズレスイメージング</span></p>
+            </article>
+
+            <article class="name-card">
+                <div class="card-top"><span class="event-name">HAREx 2026</span><span class="badges"><span
+                            class="badge organizer">運営メンバー</span></span></div>
+                <div class="person">
+                    <h2>矢野 七虹</h2><span class="roman">YANO NANAKO</span><span class="cohort">56期</span>
+                </div>
+                <p class="affiliation">神戸大学大学院 人間発達環境学研究科</p>
+                <ul class="fields field-humanities">
+                    <li>人間発達</li>
+                    <li>環境</li>
+                </ul>
+            </article>
+
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+            <div class="empty-slot" aria-hidden="true"></div>
+        </section>
+    </main>
+</body>
+
+</html>

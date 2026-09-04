@@ -718,7 +718,7 @@ h3 {
     font-size: 11px;
 }
 
-/* 会場図が画面に入ったときだけ、2教室と自由回遊の流れを短く再生する */
+/* 会場図が画面に入ったときだけ、3教室と自由回遊の流れを短く再生する */
 .has-scroll-animations .venue:not(.is-revealed) .vn-move path,
 .has-scroll-animations .venue:not(.is-revealed) .vn-participants>use {
     opacity: 0;

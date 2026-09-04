@@ -15,6 +15,17 @@
 </head>
 
 <body id="top" class="student-site">
+    <!--
+        会場構成の切替メモ
+        現在（社会科教室を使用）:
+          講演・ワークショップ = 社会科教室
+          研究展示 = 中2-3・中2-4教室
+        切替候補（2026-09-04時点の2教室構成）:
+          講演・ワークショップ = 中2-4教室
+          研究展示 = 中2-3教室
+        再切替時は「会場構成切替対象」のコメントがある各箇所と presentations.html の会場表記、
+        および下記会場図をまとめて更新すること。
+    -->
     <header class="site-header">
         <div class="wrap">
             <a class="brand" href="#top" aria-label="HAREx2026 トップへ">
@@ -47,7 +58,8 @@
                 <p class="date"><span>2026.</span><span>9.5</span><span class="dow">SAT</span></p>
                 <p class="time">14:00 — 16:30</p>
                 <div class="mv-meta">
-                    <p>会場：中2-3・中2-4教室<span>展示：中2-3教室／講演・ワークショップ：中2-4教室</span></p>
+                    <!-- 会場構成切替対象：2教室案「会場：中2-3・中2-4教室／展示：中2-3教室／講演等：中2-4教室」 -->
+                    <p>会場：社会科教室・中2-3／中2-4教室<span>講演・ワークショップ：社会科教室／展示：中2-3・中2-4教室</span></p>
                     <p>白陵中高生対象の校内限定開催<span>学外の方はお入りいただけません</span></p>
                 </div>
             </div>
@@ -81,8 +93,9 @@
                         <div class="update-meta"><time datetime="2026-09-04">2026.9.4</time><span
                                 class="update-label important">重要</span></div>
                         <div class="update-body">
-                            <h3>会場を変更しました</h3>
-                            <p><b>研究展示は中2-3教室、講演・ワークショップは中2-4教室</b>で開催します。社会科教室は使用しません。</p>
+                            <h3>会場は3教室で開催します</h3>
+                            <!-- 会場構成切替対象：2教室案「研究展示は中2-3教室、講演・ワークショップは中2-4教室」 -->
+                            <p><b>講演・ワークショップは社会科教室、研究展示は中2-3・中2-4教室</b>で開催します。</p>
                         </div>
                     </article>
                     <article class="update-item">
@@ -118,7 +131,8 @@
                     </div>
                     <div>
                         <dt>PLACE</dt>
-                        <dd>中2-3・中2-4教室<small>展示：中2-3教室／講演・ワークショップ：中2-4教室</small></dd>
+                        <!-- 会場構成切替対象：2教室案「中2-3・中2-4教室／展示：中2-3教室／講演等：中2-4教室」 -->
+                        <dd>社会科教室・中2-3／中2-4教室<small>講演・ワークショップ：社会科教室／展示：中2-3・中2-4教室</small></dd>
                     </div>
                     <div>
                         <dt>FOR</dt>
@@ -137,12 +151,17 @@
                         <dd>講演・ワークショップと展示を並行開催<small>ワークショップは、講演と同じ会場・時間枠のうち1枠で開催します</small></dd>
                     </div>
                 </dl>
+                <!--
+                    会場構成切替対象：2教室案の会場図は、左右に中2-3（展示）と中2-4（講演等）を置く構成。
+                    現在の3教室案は、社会科教室を左約7割に置き、右下の出入口から右方向へ廊下を伸ばし、
+                    中2-3・中2-4の展示室ともう1本の廊下を別の段に配置している。
+                -->
                 <div class="figure venue-figure">
-                    <svg class="venue" data-scroll-animation="venue" viewBox="0 0 900 505" role="img"
+                    <svg class="venue" data-scroll-animation="venue" viewBox="0 0 900 720" role="img"
                         aria-labelledby="venue-title venue-desc">
                         <title id="venue-title">HAREx2026会場案内図</title>
                         <desc id="venue-desc">
-                            枠外の見出しで中2-3教室の研究展示と中2-4教室の講演・ワークショップを説明し、枠内には設備と人の配置だけを示しています。展示室では発表者が担当ポスターのそばで来場者と話し、講演室では右側の黒板を正面に、縦長の机の左側に来場者がいます。
+                            上段は左側約7割が社会科教室で、右下の出入口から右方向へ細い廊下が伸びています。社会科教室は右端の黒板を正面としています。下段は中2-3教室と中2-4教室、その下に同じ幅の別の廊下があります。
                         </desc>
                         <defs>
                             <g id="venue-person">
@@ -150,111 +169,113 @@
                                 <path d="M-5.6,4 a5.6,5.6 0 0,1 11.2,0 Z" />
                             </g>
                         </defs>
-                        <rect class="vn-room vn-room--exhibition" x="20" y="70" width="410" height="300" rx="6" />
-                        <rect class="vn-room vn-room--talk" x="470" y="70" width="410" height="300" rx="6" />
-                        <path class="vn-wall"
-                            d="M20 370V70H430V370H365 M325 370H125 M75 370H20 M470 370V70H880V370H840 M800 370H570 M520 370H470" />
 
-                        <text class="vn-room-number" x="20" y="30">中2-3教室</text>
-                        <text class="vn-room-role" x="20" y="55">研究展示</text>
-                        <text class="vn-room-number" x="470" y="30">中2-4教室</text>
-                        <text class="vn-room-role" x="470" y="55">講演・ワークショップ</text>
+                        <!-- 上段：社会科教室と、右下の出入口から右へ伸びる廊下 -->
+                        <text class="vn-room-number" x="20" y="30">社会科教室</text>
+                        <text class="vn-room-role" x="20" y="55">講演・ワークショップ</text>
+                        <rect class="vn-room vn-room--talk" x="20" y="70" width="600" height="260" rx="6" />
+                        <rect class="vn-corr" x="620" y="260" width="260" height="30" rx="4" />
+                        <!-- 社会科教室の出入口は右下。右壁の切れ目が出入口 -->
+                        <path class="vn-wall" d="M20 330V70H620V260 M620 290V330H20" />
 
                         <g class="vn-objects" aria-hidden="true">
-                            <!-- 展示室：ポスターを壁沿いに配置 -->
-                            <rect class="vn-object vn-poster" x="105" y="87" width="54" height="12" rx="3" />
-                            <rect class="vn-object vn-poster" x="198" y="87" width="54" height="12" rx="3" />
-                            <rect class="vn-object vn-poster" x="291" y="87" width="54" height="12" rx="3" />
-                            <rect class="vn-object vn-poster" x="37" y="125" width="12" height="48" rx="3" />
-                            <rect class="vn-object vn-poster" x="37" y="229" width="12" height="48" rx="3" />
-                            <rect class="vn-object vn-poster" x="401" y="125" width="12" height="48" rx="3" />
-                            <rect class="vn-object vn-poster" x="401" y="229" width="12" height="48" rx="3" />
-                            <rect class="vn-object vn-poster" x="145" y="342" width="54" height="12" rx="3" />
-                            <rect class="vn-object vn-poster" x="251" y="342" width="54" height="12" rx="3" />
-
-                            <!-- 講演室：黒板を右壁、机を3列×3列に配置 -->
-                            <rect class="vn-object vn-blackboard-shape" x="846" y="112" width="16" height="176"
-                                rx="3" />
-                            <rect class="vn-object vn-desk" x="550" y="108" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="650" y="108" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="750" y="108" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="550" y="193" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="650" y="193" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="750" y="193" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="550" y="278" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="650" y="278" width="28" height="54" rx="4" />
-                            <rect class="vn-object vn-desk" x="750" y="278" width="28" height="54" rx="4" />
+                            <!-- 黒板は教室の右端 -->
+                            <rect class="vn-object vn-blackboard-shape" x="590" y="110" width="14" height="125" rx="3" />
+                            <!-- 黒板へ向く縦長の机 -->
+                            <rect class="vn-object vn-desk" x="155" y="105" width="26" height="52" rx="4" />
+                            <rect class="vn-object vn-desk" x="295" y="105" width="26" height="52" rx="4" />
+                            <rect class="vn-object vn-desk" x="435" y="105" width="26" height="52" rx="4" />
+                            <rect class="vn-object vn-desk" x="155" y="190" width="26" height="52" rx="4" />
+                            <rect class="vn-object vn-desk" x="295" y="190" width="26" height="52" rx="4" />
+                            <rect class="vn-object vn-desk" x="435" y="190" width="26" height="52" rx="4" />
+                            <rect class="vn-object vn-desk" x="155" y="275" width="26" height="38" rx="4" />
+                            <rect class="vn-object vn-desk" x="295" y="275" width="26" height="38" rx="4" />
+                            <rect class="vn-object vn-desk" x="435" y="275" width="26" height="38" rx="4" />
                         </g>
-
-                        <!-- 展示室：各発表者の周囲に3～4名の来場者を配置 -->
                         <g class="vn-alum vn-participants">
-                            <use href="#venue-person" x="132" y="116" />
-                            <use href="#venue-person" x="318" y="116" />
-                            <use href="#venue-person" x="65" y="252" />
-                            <use href="#venue-person" x="382" y="252" />
-                            <use href="#venue-person" x="821" y="204" />
+                            <use href="#venue-person" x="560" y="173" />
                         </g>
                         <g class="vn-you vn-participants">
-                            <use href="#venue-person" x="104" y="129" />
-                            <use href="#venue-person" x="158" y="128" />
-                            <use href="#venue-person" x="119" y="149" />
-                            <use href="#venue-person" x="162" y="154" />
-                            <use href="#venue-person" x="290" y="130" />
-                            <use href="#venue-person" x="346" y="127" />
-                            <use href="#venue-person" x="305" y="151" />
-                            <use href="#venue-person" x="355" y="153" />
-                            <use href="#venue-person" x="83" y="226" />
-                            <use href="#venue-person" x="94" y="254" />
-                            <use href="#venue-person" x="82" y="282" />
-                            <use href="#venue-person" x="359" y="226" />
-                            <use href="#venue-person" x="348" y="253" />
-                            <use href="#venue-person" x="363" y="280" />
-                            <use href="#venue-person" x="337" y="291" />
+                            <use href="#venue-person" x="138" y="132" />
+                            <use href="#venue-person" x="278" y="132" />
+                            <use href="#venue-person" x="418" y="132" />
+                            <use href="#venue-person" x="138" y="217" />
+                            <use href="#venue-person" x="278" y="217" />
+                            <use href="#venue-person" x="418" y="217" />
+                            <use href="#venue-person" x="138" y="296" />
+                            <use href="#venue-person" x="278" y="296" />
+                            <use href="#venue-person" x="418" y="296" />
                         </g>
-
-                        <!-- 講演室：右側の黒板に向かい、来場者は机の左側に着席 -->
-                        <g class="vn-you vn-participants">
-                            <use href="#venue-person" x="535" y="135" />
-                            <use href="#venue-person" x="735" y="135" />
-                            <use href="#venue-person" x="635" y="220" />
-                            <use href="#venue-person" x="535" y="305" />
-                            <use href="#venue-person" x="735" y="305" />
-                        </g>
-
-                        <rect class="vn-corr" x="20" y="400" width="860" height="30" rx="4" />
-                        <text class="vn-corr-label" x="450" y="420" text-anchor="middle">廊下</text>
                         <g class="vn-move">
-                            <path d="M100 420V352" />
-                            <path d="M345 420V352" />
-                            <path d="M545 420V352" />
+                            <path d="M615 275H850" />
                         </g>
                         <g class="vn-you vn-participants">
-                            <use class="vn-walker vn-walker--1" href="#venue-person" x="225" y="420" />
-                            <use class="vn-walker vn-walker--2" href="#venue-person" x="700" y="420" />
-                            <use class="vn-walker vn-walker--door-in" href="#venue-person" x="91" y="358" />
-                            <use class="vn-walker vn-walker--door-out" href="#venue-person" x="109" y="413" />
-                            <use class="vn-walker vn-walker--door-in" href="#venue-person" x="336" y="358" />
-                            <use class="vn-walker vn-walker--door-out" href="#venue-person" x="354" y="413" />
-                            <use class="vn-walker vn-walker--door-in" href="#venue-person" x="536" y="358" />
-                            <use class="vn-walker vn-walker--door-out" href="#venue-person" x="554" y="413" />
+                            <use class="vn-walker vn-walker--1" href="#venue-person" x="660" y="275" />
+                            <use class="vn-walker vn-walker--2" href="#venue-person" x="790" y="275" />
                         </g>
 
-                        <!-- 図の外側に凡例を表示 -->
+                        <!-- 下段：2つの展示室と、別系統の廊下 -->
+                        <text class="vn-room-number" x="20" y="390">中2-3教室</text>
+                        <text class="vn-room-role" x="20" y="415">研究展示</text>
+                        <text class="vn-room-number" x="470" y="390">中2-4教室</text>
+                        <text class="vn-room-role" x="470" y="415">研究展示</text>
+                        <rect class="vn-room vn-room--exhibition" x="20" y="430" width="410" height="165" rx="6" />
+                        <rect class="vn-room vn-room--exhibition" x="470" y="430" width="410" height="165" rx="6" />
+                        <path class="vn-wall"
+                            d="M20 595V430H430V595H220 M180 595H20 M470 595V430H880V595H700 M660 595H470" />
+
+                        <g class="vn-objects" aria-hidden="true">
+                            <rect class="vn-object vn-poster" x="45" y="448" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="45" y="525" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="393" y="448" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="393" y="525" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="495" y="448" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="495" y="525" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="843" y="448" width="12" height="48" rx="3" />
+                            <rect class="vn-object vn-poster" x="843" y="525" width="12" height="48" rx="3" />
+                        </g>
+                        <g class="vn-alum vn-participants">
+                            <use href="#venue-person" x="72" y="472" />
+                            <use href="#venue-person" x="378" y="472" />
+                            <use href="#venue-person" x="72" y="550" />
+                            <use href="#venue-person" x="378" y="550" />
+                            <use href="#venue-person" x="522" y="472" />
+                            <use href="#venue-person" x="828" y="472" />
+                            <use href="#venue-person" x="522" y="550" />
+                            <use href="#venue-person" x="828" y="550" />
+                        </g>
+                        <g class="vn-you vn-participants">
+                            <use href="#venue-person" x="100" y="485" />
+                            <use href="#venue-person" x="350" y="490" />
+                            <use href="#venue-person" x="110" y="545" />
+                            <use href="#venue-person" x="340" y="555" />
+                            <use href="#venue-person" x="550" y="485" />
+                            <use href="#venue-person" x="800" y="490" />
+                            <use href="#venue-person" x="560" y="545" />
+                            <use href="#venue-person" x="790" y="555" />
+                        </g>
+
+                        <rect class="vn-corr" x="20" y="615" width="860" height="30" rx="4" />
+                        <g class="vn-move">
+                            <path d="M200 638V590" />
+                            <path d="M680 638V590" />
+                        </g>
+                        <g class="vn-you vn-participants">
+                            <use class="vn-walker vn-walker--1" href="#venue-person" x="300" y="630" />
+                            <use class="vn-walker vn-walker--2" href="#venue-person" x="610" y="630" />
+                        </g>
+
                         <g class="vn-legend" aria-hidden="true">
-                            <rect class="vn-object vn-poster" x="45" y="466" width="38" height="10" rx="3" />
-                            <text x="92" y="476">ポスター</text>
-                            <rect class="vn-object vn-desk" x="220" y="452" width="16" height="30" rx="4" />
-                            <text x="246" y="476">机</text>
-                            <rect class="vn-object vn-blackboard-shape" x="335" y="451" width="10" height="32" rx="3" />
-                            <text x="355" y="476">黒板・投影面</text>
-                            <g class="vn-alum">
-                                <use href="#venue-person" x="555" y="473" />
-                            </g>
-                            <text x="569" y="476">発表者・講演者</text>
-                            <g class="vn-you">
-                                <use href="#venue-person" x="735" y="473" />
-                            </g>
-                            <text x="749" y="476">来場者</text>
+                            <rect class="vn-object vn-poster" x="65" y="690" width="38" height="10" rx="3" />
+                            <text x="112" y="700">ポスター</text>
+                            <rect class="vn-object vn-desk" x="235" y="682" width="16" height="30" rx="4" />
+                            <text x="262" y="700">机</text>
+                            <rect class="vn-object vn-blackboard-shape" x="335" y="681" width="10" height="32" rx="3" />
+                            <text x="356" y="700">黒板・投影面</text>
+                            <g class="vn-alum"><use href="#venue-person" x="555" y="697" /></g>
+                            <text x="569" y="700">発表者・講演者</text>
+                            <g class="vn-you"><use href="#venue-person" x="735" y="697" /></g>
+                            <text x="749" y="700">来場者</text>
                         </g>
                     </svg>
                 </div>
@@ -298,8 +319,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">時間</th>
-                                <th scope="col">講演・ワークショップ<br><small>中2-4教室</small></th>
-                                <th scope="col">研究展示<br><small>中2-3教室</small></th>
+                                <!-- 会場構成切替対象：2教室案「講演等：中2-4教室／研究展示：中2-3教室」 -->
+                                <th scope="col">講演・ワークショップ<br><small>社会科教室</small></th>
+                                <th scope="col">研究展示<br><small>中2-3・中2-4教室</small></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -330,7 +352,8 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="note">研究講演・ワークショップは中2-4教室で開催します。研究展示は14:00〜16:30の間、中2-3教室でいつでも見学できます。各発表の所属・発表者は<a
+                <!-- 会場構成切替対象：2教室案「講演等は中2-4教室／展示は中2-3教室」 -->
+                <p class="note">研究講演・ワークショップは社会科教室で開催します。研究展示は14:00〜16:30の間、中2-3・中2-4教室でいつでも見学できます。各発表の所属・発表者は<a
                         href="presentations.html">発表一覧</a>で確認できます。</p>
                 <a class="btn sub" href="https://drive.google.com/file/d/1bdfTSVSeqjbttZDfz1t50uwC72XidPdn/preview"
                     target="_blank" rel="noopener noreferrer">HAREx2026ポスター<span class="arw"
@@ -385,7 +408,8 @@
                     <li><span class="step-num">02</span>
                         <div>
                             <h3>当日、会場へ</h3>
-                            <p>事前登録は必要ありません。展示は中2-3教室、講演・ワークショップは中2-4教室へお越しください。</p>
+                            <!-- 会場構成切替対象：2教室案「展示は中2-3教室／講演等は中2-4教室」 -->
+                            <p>事前登録は必要ありません。講演・ワークショップは社会科教室、展示は中2-3・中2-4教室へお越しください。</p>
                         </div>
                     </li>
                     <li><span class="step-num">03</span>

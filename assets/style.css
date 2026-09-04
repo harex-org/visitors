@@ -344,6 +344,75 @@ section:first-of-type {
     border-top: 0;
 }
 
+/* ==========================================================================
+   最新情報・更新履歴
+   ========================================================================== */
+.updates-section {
+    background: var(--tint);
+}
+
+.update-list {
+    margin-top: 28px;
+    border-top: 2px solid var(--line-strong);
+}
+
+.update-item {
+    display: grid;
+    gap: 10px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.update-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+}
+
+.update-meta time {
+    color: var(--sub);
+    font-variant-numeric: tabular-nums;
+}
+
+.update-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 9px;
+    border: 1px solid var(--line-strong);
+    background: #fff;
+    color: var(--ink);
+    font-size: 11px;
+    letter-spacing: .08em;
+}
+
+.update-label.important {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.update-body h3 {
+    margin: 0 0 7px;
+    font-size: clamp(18px, 4.8vw, 23px);
+    line-height: 1.45;
+}
+
+.update-body p {
+    margin: 0;
+    color: var(--sub);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.update-body a {
+    color: var(--navy);
+    font-weight: 700;
+    text-underline-offset: 3px;
+}
+
 .heading {
     margin: 0 0 30px;
     display: flex;
@@ -548,6 +617,59 @@ h3 {
     fill: #fff;
 }
 
+.venue-figure {
+    max-width: 820px;
+    margin: 28px auto 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.venue-figure .venue {
+    min-width: 680px;
+}
+
+.venue .vn-room--exhibition {
+    fill: #fff6f3;
+}
+
+.venue .vn-room--talk {
+    fill: #f1f5fa;
+}
+
+.venue .vn-room-number {
+    fill: var(--ink);
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.venue .vn-room-role {
+    fill: var(--red);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.venue .vn-corr-label {
+    fill: var(--sub);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .18em;
+}
+
+.venue .vn-object {
+    fill: #dfe1e4;
+    stroke: #b8bcc2;
+    stroke-width: 1;
+}
+
+.venue .vn-blackboard-shape {
+    stroke-width: 1.5;
+}
+
+.venue .vn-legend text {
+    fill: var(--ink);
+    font-size: 11px;
+}
+
 .venue .vn-corr {
     fill: #ececee;
 }
@@ -596,7 +718,7 @@ h3 {
     font-size: 11px;
 }
 
-/* 会場図が画面に入ったときだけ、3企画と自由回遊の流れを短く再生する */
+/* 会場図が画面に入ったときだけ、2教室と自由回遊の流れを短く再生する */
 .has-scroll-animations .venue:not(.is-revealed) .vn-move path,
 .has-scroll-animations .venue:not(.is-revealed) .vn-participants>use {
     opacity: 0;
@@ -684,6 +806,14 @@ h3 {
     animation: venue-walk-left 1.55s ease-in-out 1.05s both;
 }
 
+.venue.is-revealed .vn-walker--door-in {
+    animation: venue-walk-in 1.45s ease-in-out 1.2s both;
+}
+
+.venue.is-revealed .vn-walker--door-out {
+    animation: venue-walk-out 1.45s ease-in-out 1.45s both;
+}
+
 @keyframes venue-room-pulse {
     0% {
         fill: #fff;
@@ -767,6 +897,40 @@ h3 {
     100% {
         opacity: .5;
         transform: translateX(0);
+    }
+}
+
+@keyframes venue-walk-in {
+    0% {
+        opacity: 0;
+        transform: translateY(52px);
+    }
+
+    18%,
+    82% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: .5;
+        transform: translateY(0);
+    }
+}
+
+@keyframes venue-walk-out {
+    0% {
+        opacity: 0;
+        transform: translateY(-48px);
+    }
+
+    18%,
+    82% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: .5;
+        transform: translateY(0);
     }
 }
 
@@ -1512,6 +1676,25 @@ footer.site .for-presenters a:focus-visible {
     body {
         font-size: 16.5px;
         padding-bottom: 0;
+    }
+
+    .venue-figure .venue {
+        min-width: 0;
+    }
+
+    .update-item {
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 28px;
+        padding: 26px 0;
+    }
+
+    .update-meta {
+        align-self: start;
+        padding-top: 3px;
+    }
+
+    .update-body p {
+        font-size: 15px;
     }
 
     .site-header .wrap {

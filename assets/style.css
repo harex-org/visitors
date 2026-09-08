@@ -2821,3 +2821,38 @@ footer.site .for-presenters a:focus-visible {
         font-size: 21px;
     }
 }
+
+/* Event completion notice below the original hero. */
+.event-completion {
+    margin: 0 0 40px;
+    padding: clamp(20px, 4vw, 36px);
+    border: 2px solid #c62828;
+    border-radius: 4px;
+    background: #fffafa;
+}
+
+.event-completion-title {
+    margin: 0;
+    color: #a51d1d;
+    font-size: clamp(17px, 2.5vw, 22px);
+    font-weight: 700;
+    line-height: 1.8;
+}
+
+.event-completion .btn {
+    margin-top: 12px;
+}
+
+.survey-panel p + p {
+    margin-top: 1em;
+}
+
+.student-mv .event-status {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    font-size: clamp(14px, 2.5vw, 20px);
+    font-weight: 700;
+    line-height: 1.6;
+}

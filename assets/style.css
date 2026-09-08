@@ -2856,3 +2856,23 @@ footer.site .for-presenters a:focus-visible {
     font-weight: 700;
     line-height: 1.6;
 }
+
+.survey-message {
+    max-width: 48rem;
+    margin-bottom: clamp(28px, 4vw, 44px);
+    color: #fff;
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 2;
+}
+
+.survey-message p {
+    margin: 0 0 1.25em;
+}
+
+.survey-message p:last-child {
+    margin-bottom: 0;
+}
+
+.survey-panel .btn {
+    margin-top: 0;
+}
